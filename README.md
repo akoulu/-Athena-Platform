@@ -1,7 +1,13 @@
 # Athena Platform
 
-[![CI](https://github.com/yourusername/athena/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/athena/actions/workflows/ci.yml)
+[![CI](https://github.com/akoulu/-Athena-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/akoulu/-Athena-Platform/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Angular](https://img.shields.io/badge/Angular-20.3-red.svg)](https://angular.io)
+[![NestJS](https://img.shields.io/badge/NestJS-11-ea2845.svg)](https://nestjs.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org)
+[![Nx](https://img.shields.io/badge/Nx-22-143055.svg)](https://nx.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-336791.svg)](https://www.postgresql.org)
 
 > A modern full-stack platform for managing social and administrative services, built with Angular 20, NestJS 11, and Nx monorepo architecture.
 
@@ -84,8 +90,8 @@
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/athena.git
-cd athena/org
+git clone https://github.com/akoulu/-Athena-Platform.git
+cd "-Athena-Platform/org"
 ```
 
 ### 2. Install dependencies
@@ -343,7 +349,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - [@yourusername](https://github.com/yourusername)
+- akoulu - [@akoulu](https://github.com/akoulu)
 
 ## 🙏 Acknowledgments
 

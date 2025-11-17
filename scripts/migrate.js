@@ -1,5 +1,11 @@
 'use strict';
-require('dotenv').config();
+// Load .env file if it exists, but don't fail if it doesn't
+try {
+  require('dotenv').config();
+} catch (e) {
+  // dotenv not available or .env file doesn't exist - use environment variables only
+}
+
 const { Sequelize } = require('sequelize-typescript');
 const { Umzug, SequelizeStorage } = require('umzug');
 

@@ -25,13 +25,28 @@ jobs:
       - name: Print Nx version
         run: npx nx --version
 
+      - name: Fetch base branch
+        run: |
+          git fetch origin main:main || true
+          git branch -a
+
       - name: Affected - Lint
-        run: npx nx affected -t lint --parallel=3
+        run: |
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            npx nx affected -t lint --parallel=3 --base=origin/main --head=HEAD
+          else
+            npx nx run-many -t lint --parallel=3
+          fi
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
       - name: Affected - Test (with coverage)
-        run: npx nx affected -t test --parallel=3 --coverage
+        run: |
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            npx nx affected -t test --parallel=3 --coverage --base=origin/main --head=HEAD
+          else
+            npx nx run-many -t test --parallel=3 --coverage
+          fi
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
@@ -58,7 +73,12 @@ jobs:
           fail_ci_if_error: false
 
       - name: Affected - Build
-        run: npx nx affected -t build --parallel=3
+        run: |
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            npx nx affected -t build --parallel=3 --base=origin/main --head=HEAD
+          else
+            npx nx run-many -t build --parallel=3
+          fi
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
@@ -76,10 +96,34 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Prepare Database Directory
+        working-directory: org
+        run: mkdir -p data
+      - name: Run Database Migrations
+        working-directory: org
+        run: npm run db:migrate:up
+        env:
+          DB_DIALECT: sqlite
+          DB_STORAGE: ./data/test.sqlite
+          JWT_SECRET: test-secret-key-for-ci
+          JWT_EXPIRES_IN: 15m
+          REFRESH_TOKEN_EXPIRES_IN: 7d
+          NODE_ENV: test
+          PORT: 3000
+          FRONTEND_URL: http://localhost:4200
       - name: Run Playwright E2E (API only)
+        working-directory: org
         env:
           CI: 'true'
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+          DB_DIALECT: sqlite
+          DB_STORAGE: ./data/test.sqlite
+          JWT_SECRET: test-secret-key-for-ci
+          JWT_EXPIRES_IN: 15m
+          REFRESH_TOKEN_EXPIRES_IN: 7d
+          NODE_ENV: test
+          PORT: 3000
+          FRONTEND_URL: http://localhost:4200
         run: npx nx e2e e2e --skip-nx-cache -- --project=api
       - name: Upload API E2E Report
         if: always()
