@@ -1,0 +1,54 @@
+<div class="input-wrapper">
+  @if (label) {
+  <label [for]="id" class="input-label">
+    {{ label }}
+    @if (required) {
+    <span class="input-label__required" aria-label="Required">*</span>
+    }
+  </label>
+  }
+  <div class="input-container" [class.input-container--error]="hasError">
+    <input
+      [id]="id"
+      [name]="name"
+      [type]="inputType"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [autocomplete]="autocomplete"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      [attr.maxlength]="maxlength"
+      [attr.minlength]="minlength"
+      [attr.pattern]="pattern"
+      [value]="value"
+      [class.input--error]="hasError"
+      (input)="onInput($event)"
+      (blur)="onBlur($event)"
+      (focus)="onFocus($event)"
+      class="input"
+    />
+    @if (type === 'password' && showPasswordToggle) {
+    <button
+      type="button"
+      class="input__toggle"
+      (click)="togglePasswordVisibility()"
+      [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+      tabindex="-1"
+    >
+      @if (showPassword) {
+      <span aria-hidden="true">👁️</span>
+      } @else {
+      <span aria-hidden="true">👁️‍🗨️</span>
+      }
+    </button>
+    }
+  </div>
+  @if (hint && !error) {
+  <span class="input-hint">{{ hint }}</span>
+  } @if (error) {
+  <span class="input-error" role="alert">{{ error }}</span>
+  }
+</div>

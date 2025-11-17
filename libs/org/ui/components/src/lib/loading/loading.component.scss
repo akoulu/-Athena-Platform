@@ -1,0 +1,136 @@
+// Design tokens
+$loading-color: #3b82f6;
+$loading-text: #6b7280;
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  &--full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+  }
+
+  // Sizes
+  &--sm {
+    .loading__spinner,
+    .loading__pulse {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .loading__dots span {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+  }
+
+  &--md {
+    .loading__spinner,
+    .loading__pulse {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .loading__dots span {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
+
+  &--lg {
+    .loading__spinner,
+    .loading__pulse {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .loading__dots span {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  // Spinner variant
+  &__spinner {
+    border: 3px solid rgba($loading-color, 0.2);
+    border-top-color: $loading-color;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  // Dots variant
+  &__dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    span {
+      display: block;
+      background-color: $loading-color;
+      border-radius: 50%;
+      animation: bounce 1.4s ease-in-out infinite both;
+
+      &:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+
+      &:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+    }
+  }
+
+  // Pulse variant
+  &__pulse {
+    background-color: $loading-color;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  &__message {
+    margin: 0;
+    font-size: 0.875rem;
+    color: $loading-text;
+    text-align: center;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}

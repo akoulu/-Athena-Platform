@@ -1,0 +1,216 @@
+// Design tokens
+$header-height: 4rem;
+$header-bg: #ffffff;
+$header-border: #e5e7eb;
+$header-text: #111827;
+$header-text-secondary: #6b7280;
+$header-hover: #f9fafb;
+$header-active: #3b82f6;
+$header-active-text: #ffffff;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: $header-bg;
+  border-bottom: 1px solid $header-border;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 1.5rem;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.header__logo {
+  height: 2rem;
+  width: auto;
+}
+
+.header__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $header-text;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $header-active;
+  }
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  justify-content: center;
+  margin: 0 2rem;
+}
+
+.header__nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $header-text-secondary;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $header-hover;
+    color: $header-text;
+  }
+
+  &--active {
+    background-color: $header-active;
+    color: $header-active-text;
+  }
+}
+
+.header__nav-icon {
+  font-size: 1rem;
+}
+
+.header__user {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.header__user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $header-hover;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $header-active;
+    outline-offset: 2px;
+  }
+}
+
+.header__user-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+
+  &--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $header-active;
+    color: $header-active-text;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+}
+
+.header__user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $header-text;
+}
+
+.header__user-arrow {
+  font-size: 0.75rem;
+  color: $header-text-secondary;
+  transition: transform 0.2s;
+
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+.header__user-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 12rem;
+  background-color: $header-bg;
+  border: 1px solid $header-border;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 0.5rem;
+  z-index: 1000;
+}
+
+.header__user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: $header-text;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  text-align: left;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $header-hover;
+  }
+}
+
+.header__user-menu-icon {
+  font-size: 1rem;
+  width: 1rem;
+  text-align: center;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .header__container {
+    padding: 0 1rem;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__user-name {
+    display: none;
+  }
+}

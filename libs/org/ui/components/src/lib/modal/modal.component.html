@@ -1,0 +1,41 @@
+@if (isOpen) {
+<div
+  class="modal-backdrop"
+  #modalBackdrop
+  (click)="onBackdropClick($event)"
+  (keydown.escape)="onClose()"
+  tabindex="-1"
+>
+  <div
+    [class]="modalClasses"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="title ? 'modal-title' : null"
+  >
+    <div class="modal__header">
+      @if (title) {
+      <h2 id="modal-title" class="modal__title">{{ title }}</h2>
+      } @if (closable) {
+      <button type="button" class="modal__close" (click)="onClose()" aria-label="Close modal">
+        ×
+      </button>
+      }
+    </div>
+    <div class="modal__body">
+      <ng-content></ng-content>
+    </div>
+    @if (showFooter) {
+    <div class="modal__footer">
+      @if (showCancel) {
+      <lib-button variant="outline" (clicked)="onCancel()">
+        {{ cancelText }}
+      </lib-button>
+      }
+      <lib-button [variant]="confirmVariant" (clicked)="onConfirm()">
+        {{ confirmText }}
+      </lib-button>
+    </div>
+    }
+  </div>
+</div>
+}

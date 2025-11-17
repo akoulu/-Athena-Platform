@@ -1,0 +1,220 @@
+// Design tokens
+$sidebar-width: 16rem;
+$sidebar-width-collapsed: 4rem;
+$header-height: 4rem;
+$sidebar-bg: #f9fafb;
+$sidebar-border: #e5e7eb;
+$sidebar-text: #111827;
+$sidebar-text-secondary: #6b7280;
+$sidebar-hover: #f3f4f6;
+$sidebar-active: #3b82f6;
+$sidebar-active-text: #ffffff;
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: $header-height;
+  bottom: 0;
+  width: $sidebar-width;
+  background-color: $sidebar-bg;
+  border-right: 1px solid $sidebar-border;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  z-index: 50;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &--collapsed {
+    width: $sidebar-width-collapsed;
+  }
+}
+
+.sidebar__toggle {
+  position: absolute;
+  top: 1rem;
+  right: -1rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid $sidebar-border;
+  border-radius: 50%;
+  background-color: $sidebar-bg;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background-color: $sidebar-hover;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $sidebar-active;
+    outline-offset: 2px;
+  }
+}
+
+.sidebar__toggle-icon {
+  font-size: 0.75rem;
+  color: $sidebar-text-secondary;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 0.5rem;
+}
+
+.sidebar__item {
+  margin-bottom: 0.25rem;
+}
+
+.sidebar__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $sidebar-text-secondary;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  text-align: left;
+  position: relative;
+
+  &:hover {
+    background-color: $sidebar-hover;
+    color: $sidebar-text;
+  }
+
+  &--active {
+    background-color: $sidebar-active;
+    color: $sidebar-active-text;
+  }
+
+  &--expanded {
+    .sidebar__menu-arrow {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.sidebar__menu-icon {
+  font-size: 1.25rem;
+  width: 1.25rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.sidebar__menu-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__menu-badge {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: $sidebar-active;
+  color: $sidebar-active-text;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.sidebar__menu-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.sidebar__submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding-left: 2.5rem;
+  margin-top: 0.25rem;
+}
+
+.sidebar__submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: $sidebar-text-secondary;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+  text-align: left;
+
+  &:hover {
+    background-color: $sidebar-hover;
+    color: $sidebar-text;
+  }
+
+  &--active {
+    background-color: rgba($sidebar-active, 0.1);
+    color: $sidebar-active;
+    font-weight: 500;
+  }
+}
+
+.sidebar__submenu-icon {
+  font-size: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.sidebar__submenu-badge {
+  padding: 0.125rem 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: $sidebar-active;
+  color: $sidebar-active-text;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+// Collapsed state
+.sidebar--collapsed {
+  .sidebar__menu-label,
+  .sidebar__menu-badge,
+  .sidebar__menu-arrow,
+  .sidebar__submenu {
+    display: none;
+  }
+
+  .sidebar__menu-item {
+    justify-content: center;
+    padding: 0.75rem;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+
+    &--collapsed {
+      transform: translateX(0);
+    }
+  }
+}

@@ -1,0 +1,129 @@
+<aside class="sidebar" [class.sidebar--collapsed]="collapsed">
+  @if (collapsible) {
+  <button
+    type="button"
+    class="sidebar__toggle"
+    (click)="onToggleCollapse()"
+    [attr.aria-label]="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+  >
+    <span class="sidebar__toggle-icon">{{ collapsed ? '▶' : '◀' }}</span>
+  </button>
+  }
+  <nav class="sidebar__nav" aria-label="Sidebar navigation">
+    @for (item of menuItems; track item.label) {
+    <div class="sidebar__item">
+      @if (item.children && item.children.length > 0) {
+      <button
+        type="button"
+        class="sidebar__menu-item"
+        [class.sidebar__menu-item--expanded]="item.expanded"
+        (click)="onMenuItemClick(item, $event)"
+      >
+        @if (item.icon) {
+        <span class="sidebar__menu-icon">{{ item.icon }}</span>
+        } @if (!collapsed) {
+        <span class="sidebar__menu-label">{{ item.label }}</span>
+        } @if (item.badge && !collapsed) {
+        <span class="sidebar__menu-badge">{{ item.badge }}</span>
+        } @if (!collapsed) {
+        <span class="sidebar__menu-arrow">{{ item.expanded ? '▼' : '▶' }}</span>
+        }
+      </button>
+      @if (item.expanded && !collapsed) {
+      <div class="sidebar__submenu">
+        @for (child of item.children; track child.label) { @if (child.route) {
+        <a
+          [routerLink]="[child.route]"
+          routerLinkActive="sidebar__submenu-item--active"
+          class="sidebar__submenu-item"
+          (click)="onMenuItemClick(child, $event)"
+        >
+          @if (child.icon) {
+          <span class="sidebar__submenu-icon">{{ child.icon }}</span>
+          }
+          {{ child.label }}
+          @if (child.badge) {
+          <span class="sidebar__submenu-badge">{{ child.badge }}</span>
+          }
+        </a>
+        } @else if (child.href) {
+        <a
+          [href]="child.href"
+          class="sidebar__submenu-item"
+          (click)="onMenuItemClick(child, $event)"
+        >
+          @if (child.icon) {
+          <span class="sidebar__submenu-icon">{{ child.icon }}</span>
+          }
+          {{ child.label }}
+          @if (child.badge) {
+          <span class="sidebar__submenu-badge">{{ child.badge }}</span>
+          }
+        </a>
+        } @else {
+        <button
+          type="button"
+          class="sidebar__submenu-item"
+          (click)="onMenuItemClick(child, $event)"
+        >
+          @if (child.icon) {
+          <span class="sidebar__submenu-icon">{{ child.icon }}</span>
+          }
+          {{ child.label }}
+          @if (child.badge) {
+          <span class="sidebar__submenu-badge">{{ child.badge }}</span>
+          }
+        </button>
+        } }
+      </div>
+      } } @else { @if (item.route) {
+      <a
+        [routerLink]="[item.route]"
+        routerLinkActive="sidebar__menu-item--active"
+        class="sidebar__menu-item"
+        (click)="onMenuItemClick(item, $event)"
+        [title]="collapsed ? item.label : ''"
+      >
+        @if (item.icon) {
+        <span class="sidebar__menu-icon">{{ item.icon }}</span>
+        } @if (!collapsed) {
+        <span class="sidebar__menu-label">{{ item.label }}</span>
+        } @if (item.badge && !collapsed) {
+        <span class="sidebar__menu-badge">{{ item.badge }}</span>
+        }
+      </a>
+      } @else if (item.href) {
+      <a
+        [href]="item.href"
+        class="sidebar__menu-item"
+        (click)="onMenuItemClick(item, $event)"
+        [title]="collapsed ? item.label : ''"
+      >
+        @if (item.icon) {
+        <span class="sidebar__menu-icon">{{ item.icon }}</span>
+        } @if (!collapsed) {
+        <span class="sidebar__menu-label">{{ item.label }}</span>
+        } @if (item.badge && !collapsed) {
+        <span class="sidebar__menu-badge">{{ item.badge }}</span>
+        }
+      </a>
+      } @else {
+      <button
+        type="button"
+        class="sidebar__menu-item"
+        (click)="onMenuItemClick(item, $event)"
+        [title]="collapsed ? item.label : ''"
+      >
+        @if (item.icon) {
+        <span class="sidebar__menu-icon">{{ item.icon }}</span>
+        } @if (!collapsed) {
+        <span class="sidebar__menu-label">{{ item.label }}</span>
+        } @if (item.badge && !collapsed) {
+        <span class="sidebar__menu-badge">{{ item.badge }}</span>
+        }
+      </button>
+      } }
+    </div>
+    }
+  </nav>
+</aside>

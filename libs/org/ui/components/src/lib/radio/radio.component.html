@@ -1,0 +1,24 @@
+<label class="radio" [class.radio--disabled]="disabled">
+  <input
+    type="radio"
+    [id]="id"
+    [name]="name"
+    [value]="value"
+    [checked]="checked"
+    [disabled]="disabled"
+    [required]="required"
+    (change)="onToggle($event)"
+    (blur)="onBlur()"
+    class="radio__input"
+  />
+  <span class="radio__circle"></span>
+  @if (label) {
+  <span class="radio__label">
+    {{ label }}
+    @if (required) {
+    <span class="radio__required" aria-label="Required">*</span>
+    }
+  </span>
+  }
+  <ng-content></ng-content>
+</label>

@@ -1,0 +1,21 @@
+{
+  "name": "feature-demographics",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/org/feature-demographics/feature/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:org", "type:lib", "type:feature", "domain:demographics"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/org/feature-demographics/feature/jest.config.ts",
+        "tsConfig": "libs/org/feature-demographics/feature/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div [class]="cardClasses">
+  @if (title || subtitle) {
+  <div class="card__header">
+    @if (title) {
+    <h3 class="card__title">{{ title }}</h3>
+    } @if (subtitle) {
+    <p class="card__subtitle">{{ subtitle }}</p>
+    }
+  </div>
+  }
+  <div class="card__content">
+    <ng-content></ng-content>
+  </div>
+  <ng-content select="[slot=footer]"></ng-content>
+</div>

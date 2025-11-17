@@ -1,0 +1,27 @@
+{
+  "name": "utils",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/org/core/utils/src",
+  "projectType": "library",
+  "tags": ["scope:org", "type:lib", "type:core"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/org/core/utils",
+        "main": "libs/org/core/utils/src/index.ts",
+        "tsConfig": "libs/org/core/utils/tsconfig.lib.json",
+        "assets": ["libs/org/core/utils/*.md"],
+        "format": ["cjs"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/org/core/utils/jest.config.ts"
+      }
+    }
+  }
+}

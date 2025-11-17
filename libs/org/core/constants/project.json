@@ -1,0 +1,27 @@
+{
+  "name": "constants",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/org/core/constants/src",
+  "projectType": "library",
+  "tags": ["scope:org", "type:lib", "type:core"],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/org/core/constants",
+        "main": "libs/org/core/constants/src/index.ts",
+        "tsConfig": "libs/org/core/constants/tsconfig.lib.json",
+        "assets": ["libs/org/core/constants/*.md"],
+        "format": ["cjs"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/org/core/constants/jest.config.ts"
+      }
+    }
+  }
+}

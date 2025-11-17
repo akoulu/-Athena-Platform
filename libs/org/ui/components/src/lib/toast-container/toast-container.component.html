@@ -1,0 +1,11 @@
+<div class="toast-container">
+  @for (toast of toasts; track toast.id) {
+  <lib-toast
+    [message]="toast.message"
+    [type]="toast.type"
+    [duration]="toast.duration ?? 5000"
+    [closable]="toast.closable ?? true"
+    (closeEvent)="onToastClose(toast.id)"
+  />
+  }
+</div>

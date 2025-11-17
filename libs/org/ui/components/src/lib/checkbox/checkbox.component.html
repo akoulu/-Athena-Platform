@@ -1,0 +1,24 @@
+<label class="checkbox" [class.checkbox--disabled]="disabled">
+  <input
+    type="checkbox"
+    [id]="id"
+    [name]="name"
+    [checked]="checked"
+    [disabled]="disabled"
+    [required]="required"
+    [indeterminate]="indeterminate"
+    (change)="onToggle($event)"
+    (blur)="onBlur()"
+    class="checkbox__input"
+  />
+  <span class="checkbox__checkmark"></span>
+  @if (label) {
+  <span class="checkbox__label">
+    {{ label }}
+    @if (required) {
+    <span class="checkbox__required" aria-label="Required">*</span>
+    }
+  </span>
+  }
+  <ng-content></ng-content>
+</label>

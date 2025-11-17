@@ -1,0 +1,52 @@
+<div class="table-wrapper">
+  @if (loading) {
+  <div class="table-loading">
+    <lib-loading message="Loading data..." />
+  </div>
+  } @else {
+  <table class="table" [class.table--striped]="striped" [class.table--hoverable]="hoverable">
+    <thead>
+      <tr>
+        @for (column of columns; track column.key) {
+        <th
+          [style.width]="column.width"
+          [class.table__header--sortable]="column.sortable"
+          (click)="onSort(column)"
+        >
+          <div class="table__header-content">
+            <span>{{ column.label }}</span>
+            @if (column.sortable) {
+            <span class="table__sort-icon">{{ getSortIcon(column) }}</span>
+            }
+          </div>
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @if (data.length === 0) {
+      <tr>
+        <td [attr.colspan]="columns.length" class="table__empty">
+          {{ emptyMessage }}
+        </td>
+      </tr>
+      } @else { @for (row of data; track $index) {
+      <tr>
+        @for (column of columns; track column.key) {
+        <td>
+          @if (column.template) {
+          <ng-container
+            [ngTemplateOutlet]="column.template"
+            [ngTemplateOutletContext]="{ $implicit: row, column: column }"
+          ></ng-container>
+          } @else {
+          {{ row[column.key] }}
+          }
+        </td>
+        }
+      </tr>
+      } }
+    </tbody>
+  </table>
+  }
+</div>

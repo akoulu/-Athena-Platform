@@ -1,0 +1,154 @@
+// Design tokens
+$btn-padding-sm: 0.5rem 1rem;
+$btn-padding-md: 0.75rem 1.5rem;
+$btn-padding-lg: 1rem 2rem;
+$btn-font-size-sm: 0.875rem;
+$btn-font-size-md: 1rem;
+$btn-font-size-lg: 1.125rem;
+$btn-border-radius: 0.375rem;
+$btn-transition: all 0.2s ease-in-out;
+
+// Colors
+$primary: #3b82f6;
+$primary-hover: #2563eb;
+$primary-active: #1d4ed8;
+$secondary: #6b7280;
+$secondary-hover: #4b5563;
+$secondary-active: #374151;
+$danger: #ef4444;
+$danger-hover: #dc2626;
+$danger-active: #b91c1c;
+$outline-border: #d1d5db;
+$outline-hover: #f3f4f6;
+$ghost-hover: #f9fafb;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: $btn-border-radius;
+  cursor: pointer;
+  transition: $btn-transition;
+  white-space: nowrap;
+  user-select: none;
+  font-family: inherit;
+  line-height: 1.5;
+
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+
+  // Sizes
+  &--sm {
+    padding: $btn-padding-sm;
+    font-size: $btn-font-size-sm;
+  }
+
+  &--md {
+    padding: $btn-padding-md;
+    font-size: $btn-font-size-md;
+  }
+
+  &--lg {
+    padding: $btn-padding-lg;
+    font-size: $btn-font-size-lg;
+  }
+
+  // Variants
+  &--primary {
+    background-color: $primary;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: $primary-hover;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $primary-active;
+    }
+  }
+
+  &--secondary {
+    background-color: $secondary;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: $secondary-hover;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $secondary-active;
+    }
+  }
+
+  &--danger {
+    background-color: $danger;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: $danger-hover;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $danger-active;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: $secondary;
+    border-color: $outline-border;
+
+    &:hover:not(:disabled) {
+      background-color: $outline-hover;
+      border-color: $secondary;
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: $secondary;
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background-color: $ghost-hover;
+    }
+  }
+
+  // States
+  &--disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &--loading {
+    cursor: wait;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  // Spinner
+  &__spinner {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

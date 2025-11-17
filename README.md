@@ -1,82 +1,363 @@
-# Org
+# Athena Platform
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+[![CI](https://github.com/yourusername/athena/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/athena/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+> A modern full-stack platform for managing social and administrative services, built with Angular 20, NestJS 11, and Nx monorepo architecture.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-standalone-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 🚀 Features
 
-## Finish your CI setup
+- **🔐 Authentication & Authorization**
+  - JWT-based authentication with refresh tokens
+  - Role-based access control (RBAC)
+  - Password reset via email
+  - Secure token storage in database
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/sNUFynNSK5)
+- **👥 User Management**
+  - Complete CRUD operations for users
+  - Admin panel for user administration
+  - User profile management
 
+- **📊 Dashboard**
+  - Real-time statistics
+  - User activity monitoring
+  - System overview
 
-## Run tasks
+- **🏗️ Architecture**
+  - Domain-Driven Design (DDD) principles
+  - Nx monorepo with strict dependency boundaries
+  - Modular, scalable structure
+  - Type-safe shared types between frontend and backend
 
-To run the dev server for your app, use:
+- **🛡️ Security**
+  - Helmet.js for security headers
+  - Rate limiting with throttling
+  - CORS configuration
+  - Environment variable validation
+  - Request ID tracking
+  - Global exception handling
 
-```sh
+- **📝 API Documentation**
+  - Swagger/OpenAPI integration
+  - Interactive API explorer
+  - Versioned API (`/api/v1`)
+
+- **✅ Testing**
+  - Unit tests with Jest
+  - Integration tests
+  - E2E tests with Playwright
+  - Code coverage reporting
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Angular 20.3** - Modern web framework
+- **TypeScript 5.9** - Type-safe development
+- **RxJS 7.8** - Reactive programming
+- **Standalone Components** - Modern Angular architecture
+
+### Backend
+- **NestJS 11** - Progressive Node.js framework
+- **Sequelize 6** - SQL ORM
+- **PostgreSQL/SQLite** - Database support
+- **JWT** - Authentication
+- **Nodemailer** - Email service
+- **Winston** - Structured logging
+
+### DevOps & Tools
+- **Nx 22** - Monorepo tooling
+- **Jest** - Testing framework
+- **Playwright** - E2E testing
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **GitHub Actions** - CI/CD
+
+## 📋 Prerequisites
+
+- **Node.js** >= 20.x
+- **npm** >= 10.x
+- **PostgreSQL** >= 14 (optional, SQLite supported for development)
+- **Git**
+
+## 🚦 Quick Start
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/athena.git
+cd athena/org
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file in the `org` directory:
+
+```env
+# Database
+DB_DIALECT=sqlite
+DB_STORAGE=./data/dev.sqlite
+
+# Or for PostgreSQL:
+# DB_DIALECT=postgres
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_NAME=athena
+# DB_USER=postgres
+# DB_PASS=password
+
+# JWT
+JWT_SECRET=your-secret-key-change-in-production
+JWT_EXPIRES_IN=15m
+REFRESH_TOKEN_EXPIRES_IN=7d
+
+# Application
+NODE_ENV=development
+PORT=3000
+FRONTEND_URL=http://localhost:4200
+
+# Email (optional, for password reset)
+EMAIL_ENABLED=false
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_SECURE=false
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+EMAIL_FROM=your-email@gmail.com
+```
+
+### 4. Run database migrations
+
+```bash
+npm run db:migrate:up
+```
+
+### 5. Start development servers
+
+```bash
+# Start both frontend and backend
+npm run serve:all
+
+# Or start separately:
+# Frontend only
 npx nx serve org
+
+# Backend only
+npx nx serve api
 ```
 
-To create a production bundle:
+### 6. Access the application
 
-```sh
+- **Frontend**: http://localhost:4200
+- **Backend API**: http://localhost:3000
+- **API Documentation**: http://localhost:3000/api/v1/docs
+- **Health Check**: http://localhost:3000/api/v1/health
+
+## 📚 Project Structure
+
+```
+org/
+├── libs/org/
+│   ├── core/              # Core domain logic, types, utilities
+│   │   ├── auth/         # Authentication domain
+│   │   ├── users/        # Users domain
+│   │   ├── types/        # Shared TypeScript types
+│   │   ├── utils/        # Utility functions
+│   │   └── constants/    # Constants
+│   │
+│   ├── data-access/      # API clients and services
+│   │   ├── api-client/   # Base HTTP client
+│   │   ├── auth/         # Auth API service
+│   │   └── users-api/    # Users API service
+│   │
+│   ├── feature-*/        # Feature modules
+│   │   ├── auth/         # Authentication feature
+│   │   ├── dashboard/    # Dashboard feature
+│   │   └── users/        # Users management feature
+│   │
+│   ├── ui/               # UI components
+│   │   ├── components/   # Reusable components
+│   │   ├── layouts/      # Layout components
+│   │   └── design-system/# Design tokens
+│   │
+│   └── util/             # Cross-cutting utilities
+│       ├── guards/       # Route guards
+│       ├── validators/   # Form validators
+│       └── formatters/   # Data formatters
+│
+├── org/
+│   └── api/              # NestJS backend application
+│
+├── src/                  # Angular frontend application
+├── migrations/           # Database migrations
+├── e2e/                  # E2E tests
+└── scripts/              # Utility scripts
+```
+
+## 🧪 Testing
+
+### Run all tests
+
+```bash
+# Unit tests
+npm run test:all
+
+# Integration tests
+npm run test:integration
+
+# Integration tests with coverage
+npm run test:integration:coverage
+
+# E2E tests
+npm run e2e:api          # API E2E tests
+npm run e2e:ui:chromium  # UI E2E tests (Chromium)
+npm run e2e:ui:firefox   # UI E2E tests (Firefox)
+```
+
+### Run tests for a specific project
+
+```bash
+npx nx test <project-name>
+npx nx test org --coverage
+npx nx test api --coverage
+```
+
+## 🔍 Code Quality
+
+### Linting
+
+```bash
+# Lint all projects
+npm run lint:all
+
+# Lint specific project
+npx nx lint <project-name>
+```
+
+### Formatting
+
+```bash
+# Format all files
+npm run format
+
+# Check formatting
+npm run format:check
+```
+
+## 🗄️ Database Migrations
+
+```bash
+# Run migrations
+npm run db:migrate:up
+
+# Rollback migrations
+npm run db:migrate:down
+```
+
+## 📖 Documentation
+
+- [Architecture Overview](./DOMAIN_ARCHITECTURE.md) - DDD architecture and domain structure
+- [Configuration Guide](./CONFIGURATION.md) - Detailed configuration options
+- [Quick Start Guide](./QUICK_START.md) - Quick reference for common tasks
+- [Email Setup](./EMAIL_SETUP.md) - Email service configuration
+- [Supabase RLS Setup](./SUPABASE_RLS_SETUP.md) - Row Level Security configuration
+
+## 🏗️ Architecture Principles
+
+### Domain-Driven Design (DDD)
+
+The project follows DDD principles with clear domain boundaries:
+
+- **Core** - Foundation layer (types, utilities, constants)
+- **Data Access** - API communication layer
+- **Features** - Business domain features
+- **UI** - Reusable UI components
+- **Util** - Cross-cutting utilities
+
+### Dependency Rules
+
+- **Core** → Can be imported by anyone
+- **Data Access** → Can import: Core
+- **Feature** → Can import: Core, Data Access, UI, Feature
+- **UI** → Can import: Core, UI
+- **App** → Can import: Everything
+
+These rules are enforced via ESLint rules in the monorepo.
+
+## 🔐 Security Features
+
+- ✅ JWT authentication with refresh tokens
+- ✅ Password hashing with bcrypt
+- ✅ Token storage in database (not memory)
+- ✅ Automatic token refresh on frontend
+- ✅ Rate limiting on API endpoints
+- ✅ CORS configuration
+- ✅ Security headers (Helmet.js)
+- ✅ Environment variable validation
+- ✅ Request ID tracking
+- ✅ Global exception handling
+- ✅ Row Level Security (RLS) support
+
+## 🚢 Deployment
+
+### Environment Variables
+
+Ensure all required environment variables are set in your production environment. See the `.env` example above.
+
+### Database
+
+Run migrations in production:
+
+```bash
+npm run db:migrate:up
+```
+
+### Build
+
+```bash
+# Build frontend
 npx nx build org
+
+# Build backend
+npx nx build api
 ```
 
-To see all available targets to run for a project, run:
+## 🤝 Contributing
 
-```sh
-npx nx show project org
-```
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 📝 License
 
-## Add new projects
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+## 👥 Authors
 
-Use the plugin's generator to create new projects.
+- Your Name - [@yourusername](https://github.com/yourusername)
 
-To generate a new application, use:
+## 🙏 Acknowledgments
 
-```sh
-npx nx g @nx/angular:app demo
-```
+- [Nx](https://nx.dev) - Monorepo tooling
+- [Angular](https://angular.io) - Frontend framework
+- [NestJS](https://nestjs.com) - Backend framework
+- [Playwright](https://playwright.dev) - E2E testing
 
-To generate a new library, use:
+---
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-standalone-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**Note**: This is a development project. For production use, ensure all security best practices are followed, including:
+- Strong JWT secrets
+- Secure database credentials
+- HTTPS configuration
+- Proper CORS settings
+- Rate limiting configuration
+- Monitoring and logging setup

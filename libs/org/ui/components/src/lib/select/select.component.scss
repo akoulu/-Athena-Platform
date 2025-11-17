@@ -1,0 +1,121 @@
+// Design tokens (same as input)
+$select-padding: 0.75rem 1rem;
+$select-font-size: 1rem;
+$select-border-radius: 0.375rem;
+$select-border-width: 1px;
+$select-transition: all 0.2s ease-in-out;
+
+// Colors
+$select-border: #d1d5db;
+$select-border-focus: #3b82f6;
+$select-border-error: #ef4444;
+$select-bg: #ffffff;
+$select-bg-disabled: #f9fafb;
+$select-text: #111827;
+$select-text-disabled: #9ca3af;
+$select-placeholder: #9ca3af;
+$select-error: #ef4444;
+$select-hint: #6b7280;
+$select-label: #374151;
+
+.select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.select-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $select-label;
+  line-height: 1.5;
+
+  &__required {
+    color: $select-error;
+    margin-left: 0.25rem;
+  }
+}
+
+.select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &--error {
+    .select {
+      border-color: $select-border-error;
+    }
+  }
+}
+
+.select {
+  width: 100%;
+  padding: $select-padding;
+  padding-right: 2.5rem;
+  font-size: $select-font-size;
+  line-height: 1.5;
+  color: $select-text;
+  background-color: $select-bg;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23374151' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  border: $select-border-width solid $select-border;
+  border-radius: $select-border-radius;
+  transition: $select-transition;
+  font-family: inherit;
+  appearance: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: $select-border-focus;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &:disabled {
+    background-color: $select-bg-disabled;
+    color: $select-text-disabled;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &--error {
+    border-color: $select-border-error;
+
+    &:focus {
+      border-color: $select-border-error;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  option {
+    padding: 0.5rem;
+  }
+
+  option:disabled {
+    color: $select-text-disabled;
+  }
+}
+
+.select-hint {
+  font-size: 0.875rem;
+  color: $select-hint;
+  line-height: 1.5;
+}
+
+.select-error {
+  font-size: 0.875rem;
+  color: $select-error;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  &::before {
+    content: '⚠';
+    font-size: 1rem;
+  }
+}

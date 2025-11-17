@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "target": "es2022",
+    "module": "preserve",
+    "lib": ["es2020", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@org/types": ["libs/org/core/types/src/index.ts"],
+      "@org/utils": ["libs/org/core/utils/src/index.ts"],
+      "@org/constants": ["libs/org/core/constants/src/index.ts"],
+      "@org/api-client": ["libs/org/data-access/api-client/src/index.ts"],
+      "@org/validators": ["libs/org/util/validators/src/index.ts"],
+      "@org/formatters": ["libs/org/util/formatters/src/index.ts"],
+      "@org/ui-design-system": ["libs/org/ui/design-system/src/index.ts"],
+      "@org/ui-layouts": ["libs/org/ui/layouts/src/index.ts"],
+      "@org/util-guards": ["libs/org/util/guards/src/index.ts"],
+      "@org/ui-components": ["libs/org/ui/components/src/index.ts"],
+      "@org/data-access-demographics-api": ["libs/org/data-access/demographics-api/src/index.ts"],
+      "@org/feature-demographics": ["libs/org/feature-demographics/feature/src/index.ts"],
+      "@org/feature-demographics-api": ["libs/org/feature-demographics/api/src/index.ts"],
+      "@org/auth": ["libs/org/core/auth/src/index.ts"],
+      "@org/users": ["libs/org/core/users/src/index.ts"],
+      "@org/data-access-auth": ["libs/org/data-access/auth/src/index.ts"],
+      "@org/data-access-users-api": ["libs/org/data-access/users-api/src/index.ts"],
+      "@org/feature-auth": ["libs/org/feature-auth/src/index.ts"],
+      "@org/feature-dashboard": ["libs/org/feature-dashboard/src/index.ts"],
+      "@org/feature-users": ["libs/org/feature-users/src/index.ts"],
+      "@org/ui/components": ["libs/org/ui/components/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

@@ -1,0 +1,125 @@
+<div class="user-form-container">
+  <div class="user-form-card">
+    <h2>{{ isEditMode ? 'Edit User' : 'Create User' }}</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="form-control"
+          [class.invalid]="emailInvalid"
+          placeholder="user@example.com"
+        />
+        @if (emailInvalid) {
+        <div class="error-message">
+          @if (emailRequired) {
+          <span>Email is required</span>
+          } @if (emailFormatInvalid) {
+          <span>Invalid email format</span>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="username">Username *</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="form-control"
+          [class.invalid]="usernameInvalid"
+          placeholder="johndoe"
+        />
+        @if (usernameInvalid) {
+        <div class="error-message">
+          @if (usernameRequired) {
+          <span>Username is required</span>
+          }
+        </div>
+        }
+      </div>
+
+      @if (!isEditMode) {
+      <div class="form-group">
+        <label for="password">Password *</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.invalid]="passwordInvalid"
+          placeholder="Minimum 8 characters"
+        />
+        @if (passwordInvalid) {
+        <div class="error-message">
+          @if (passwordRequired) {
+          <span>Password is required</span>
+          } @if (passwordMinLength) {
+          <span>Password must be at least 8 characters</span>
+          }
+        </div>
+        }
+      </div>
+      }
+
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          id="firstName"
+          type="text"
+          formControlName="firstName"
+          class="form-control"
+          placeholder="John"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          id="lastName"
+          type="text"
+          formControlName="lastName"
+          class="form-control"
+          placeholder="Doe"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="roles">Roles</label>
+        <select id="roles" formControlName="roles" class="form-control" multiple>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+        <small class="helper-text">Hold Ctrl/Cmd to select multiple roles</small>
+      </div>
+
+      @if (isEditMode) {
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="isActive" />
+          <span>Active</span>
+        </label>
+      </div>
+      } @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+      } @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+      }
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
+          {{ loading ? 'Saving...' : isEditMode ? 'Update User' : 'Create User' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

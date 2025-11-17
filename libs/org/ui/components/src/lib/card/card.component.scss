@@ -1,0 +1,133 @@
+// Design tokens
+$card-border-radius: 0.5rem;
+$card-border-width: 1px;
+$card-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$card-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$card-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$card-transition: all 0.2s ease-in-out;
+
+// Colors
+$card-bg: #ffffff;
+$card-border: #e5e7eb;
+$card-text: #111827;
+$card-text-secondary: #6b7280;
+
+// Padding
+$card-padding-none: 0;
+$card-padding-sm: 1rem;
+$card-padding-md: 1.5rem;
+$card-padding-lg: 2rem;
+
+.card {
+  background-color: $card-bg;
+  border-radius: $card-border-radius;
+  color: $card-text;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // Variants
+  &--default {
+    border: $card-border-width solid $card-border;
+  }
+
+  &--outlined {
+    border: $card-border-width solid $card-border;
+    box-shadow: none;
+  }
+
+  &--elevated {
+    border: none;
+    box-shadow: $card-shadow-md;
+  }
+
+  // Padding
+  &--padding-none {
+    .card__content {
+      padding: $card-padding-none;
+    }
+  }
+
+  &--padding-sm {
+    .card__content {
+      padding: $card-padding-sm;
+    }
+  }
+
+  &--padding-md {
+    .card__content {
+      padding: $card-padding-md;
+    }
+  }
+
+  &--padding-lg {
+    .card__content {
+      padding: $card-padding-lg;
+    }
+  }
+
+  // Clickable
+  &--clickable {
+    cursor: pointer;
+    transition: $card-transition;
+
+    &:hover {
+      box-shadow: $card-shadow-lg;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // Header
+  &__header {
+    padding: $card-padding-md;
+    border-bottom: $card-border-width solid $card-border;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: $card-text;
+  }
+
+  &__subtitle {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: $card-text-secondary;
+  }
+
+  // Content
+  &__content {
+    flex: 1;
+  }
+
+  // Footer slot
+  [slot='footer'] {
+    padding: $card-padding-md;
+    border-top: $card-border-width solid $card-border;
+    background-color: #f9fafb;
+  }
+}
+
+// Responsive
+@media (max-width: 640px) {
+  .card {
+    &__header {
+      padding: $card-padding-sm;
+    }
+
+    &__content {
+      padding: $card-padding-sm !important;
+    }
+
+    [slot='footer'] {
+      padding: $card-padding-sm;
+    }
+  }
+}

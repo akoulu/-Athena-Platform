@@ -1,0 +1,20 @@
+{
+  "name": "feature-users",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/org/feature-users/src",
+  "projectType": "library",
+  "tags": ["scope:org", "type:lib", "type:feature", "domain:users"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/org/feature-users/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

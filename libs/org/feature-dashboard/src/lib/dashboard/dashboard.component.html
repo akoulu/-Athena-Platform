@@ -1,0 +1,46 @@
+<div class="dashboard">
+  <lib-header
+    title="Athena"
+    [menuItems]="headerMenuItems"
+    [userMenuItems]="userMenuItems"
+    [showUserMenu]="true"
+    userName="John Doe"
+  />
+  <div class="dashboard__container">
+    <lib-sidebar
+      [menuItems]="sidebarMenuItems"
+      [collapsed]="sidebarCollapsed"
+      [collapsible]="true"
+      (toggleCollapse)="onSidebarToggle($event)"
+    />
+    <main class="dashboard__main" [class.dashboard__main--collapsed]="sidebarCollapsed">
+      <div class="dashboard__content">
+        <h1 class="dashboard__title">Dashboard</h1>
+        <div class="dashboard__grid">
+          <lib-card title="Welcome" subtitle="Overview of your organization">
+            <p>Welcome to Athena Dashboard. Here you can manage your organization's data.</p>
+          </lib-card>
+          <lib-card title="Statistics" subtitle="Key metrics">
+            <div class="dashboard__stats">
+              <div class="dashboard__stat">
+                <div class="dashboard__stat-value">1,234</div>
+                <div class="dashboard__stat-label">Total Users</div>
+              </div>
+              <div class="dashboard__stat">
+                <div class="dashboard__stat-value">567</div>
+                <div class="dashboard__stat-label">Active Sessions</div>
+              </div>
+              <div class="dashboard__stat">
+                <div class="dashboard__stat-value">89</div>
+                <div class="dashboard__stat-label">Pending Tasks</div>
+              </div>
+            </div>
+          </lib-card>
+          <lib-card title="Recent Activity" subtitle="Latest updates">
+            <p>No recent activity to display.</p>
+          </lib-card>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

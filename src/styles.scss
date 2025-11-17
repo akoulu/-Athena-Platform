@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global reset to remove default browser margins and avoid phantom scrollbars */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Use border-box sizing everywhere for predictable widths/heights */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -1,0 +1,153 @@
+// Design tokens
+$modal-backdrop: rgba(0, 0, 0, 0.5);
+$modal-bg: #ffffff;
+$modal-border: #e5e7eb;
+$modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// Sizes
+$modal-width-sm: 24rem;
+$modal-width-md: 32rem;
+$modal-width-lg: 48rem;
+$modal-width-xl: 64rem;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $modal-backdrop;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+  background-color: $modal-bg;
+  border-radius: 0.5rem;
+  box-shadow: $modal-shadow;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  max-width: 100%;
+  width: 100%;
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+
+  // Sizes
+  &--sm {
+    max-width: $modal-width-sm;
+  }
+
+  &--md {
+    max-width: $modal-width-md;
+  }
+
+  &--lg {
+    max-width: $modal-width-lg;
+  }
+
+  &--xl {
+    max-width: $modal-width-xl;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid $modal-border;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  &__close {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: #6b7280;
+    cursor: pointer;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f3f4f6;
+      color: #111827;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+  }
+
+  &__body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid $modal-border;
+    background-color: #f9fafb;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Responsive
+@media (max-width: 640px) {
+  .modal {
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+
+    &__header,
+    &__body,
+    &__footer {
+      padding: 1rem;
+    }
+  }
+
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+}

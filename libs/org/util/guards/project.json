@@ -1,0 +1,21 @@
+{
+  "name": "util-guards",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/org/util/guards/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:org", "type:lib", "type:util"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/org/util/guards/jest.config.ts",
+        "tsConfig": "libs/org/util/guards/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

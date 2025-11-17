@@ -1,0 +1,7 @@
+<div [class]="toastClasses" role="alert">
+  <div class="toast__icon">{{ icon }}</div>
+  <div class="toast__message">{{ message }}</div>
+  @if (closable) {
+  <button type="button" class="toast__close" (click)="onClose()" aria-label="Close">×</button>
+  }
+</div>

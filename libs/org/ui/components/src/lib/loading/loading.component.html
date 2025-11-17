@@ -1,0 +1,15 @@
+<div [class]="loadingClasses">
+  @if (variant === 'spinner') {
+  <div class="loading__spinner"></div>
+  } @else if (variant === 'dots') {
+  <div class="loading__dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  } @else if (variant === 'pulse') {
+  <div class="loading__pulse"></div>
+  } @if (message) {
+  <p class="loading__message">{{ message }}</p>
+  }
+</div>

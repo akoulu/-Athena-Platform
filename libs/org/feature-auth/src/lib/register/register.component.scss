@@ -1,0 +1,258 @@
+// Register - refined, responsive, themable, fits 1 screen
+
+:host {
+  --color-primary: #0d6efd;
+  --color-primary-hover: #0b5ed7;
+  --color-primary-pressed: #0a58ca;
+  --color-danger: #dc3545;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #64748b;
+  --color-border: #e5e7eb;
+  --shadow-lg: 0 10px 30px rgba(2, 6, 23, 0.08);
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :host {
+    --color-primary: #4c8dff;
+    --color-primary-hover: #3f7ff0;
+    --color-primary-pressed: #3a74de;
+    --color-danger: #f87171;
+    --color-surface: #0b1220;
+    --color-surface-elevated: #0f172a;
+    --color-text: #e5e7eb;
+    --color-muted: #94a3b8;
+    --color-border: #1f2937;
+    --shadow-lg: 0 12px 34px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (forced-colors: active) {
+  :host {
+    --color-border: CanvasText;
+  }
+  .form-control {
+    border: 1px solid CanvasText !important;
+  }
+  .btn-primary {
+    border: 1px solid CanvasText !important;
+  }
+}
+
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+.register-container {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 100svh;
+  padding: clamp(8px, 2vw, 16px);
+  padding-left: max(10px, env(safe-area-inset-left));
+  padding-right: max(10px, env(safe-area-inset-right));
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+.register-card {
+  width: 100%;
+  max-width: min(96vw, 900px);
+  padding: clamp(12px, 2.4vw, 18px);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text);
+}
+
+h2 {
+  margin-bottom: clamp(8px, 1vw, 12px);
+  text-align: center;
+  font-size: clamp(0.95rem, 1vw + 0.9rem, 1.25rem);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.name-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(10px, 1.6vw, 14px);
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  margin-bottom: clamp(8px, 1vw, 12px);
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: clamp(0.9rem, 0.3vw + 0.85rem, 0.98rem);
+}
+
+.helper-text {
+  margin-top: 4px;
+  font-size: clamp(0.76rem, 0.25vw + 0.7rem, 0.85rem);
+  color: var(--color-muted);
+}
+
+.form-control {
+  width: 100%;
+  padding: clamp(7px, 0.9vw, 9px) clamp(9px, 1vw, 11px);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: clamp(0.88rem, 0.25vw + 0.84rem, 0.96rem);
+  line-height: 1.4;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  background: var(--color-surface);
+  color: var(--color-text);
+  &::placeholder {
+    color: var(--color-muted);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
+    background-color: var(--color-surface);
+  }
+  &.invalid {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.16);
+  }
+  &:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+  }
+}
+
+.error-message {
+  color: var(--color-danger);
+  font-size: clamp(0.75rem, 0.2vw + 0.72rem, 0.85rem);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.btn {
+  width: 100%;
+  padding: clamp(9px, 1vw, 11px) clamp(10px, 1.2vw, 12px);
+  border: none;
+  border-radius: 12px;
+  font-size: clamp(0.9rem, 0.25vw + 0.86rem, 0.98rem);
+  font-weight: 800;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.02s ease, box-shadow 0.2s ease;
+  will-change: transform;
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+  &:active:not(:disabled) {
+    background-color: var(--color-primary-pressed);
+  }
+  &:disabled {
+    background-color: #9aa7b6;
+    color: #fff;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.login-link {
+  margin-top: 8px;
+  text-align: center;
+  font-size: clamp(0.84rem, 0.25vw + 0.8rem, 0.92rem);
+  color: var(--color-muted);
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+// Extra-compact for very short heights
+@media (max-height: 680px) {
+  .register-card {
+    padding: 10px;
+  }
+  h2 {
+    margin-bottom: 8px;
+  }
+  .form-group {
+    margin-bottom: 8px;
+  }
+  .btn {
+    padding: 9px 10px;
+  }
+}
+
+@media (min-width: $bp-md) {
+  .register-card {
+    max-width: 820px;
+  }
+}
+@media (min-width: $bp-lg) {
+  .register-card {
+    max-width: 900px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+// Grid for compact vertical layout (tighter)
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(8px, 1.2vw, 12px);
+
+  // two columns earlier to reduce height
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.grid-span-2 {
+  @media (min-width: 768px) {
+    grid-column: 1 / -1;
+  }
+}
+
+// Container fits viewport without adding scroll
+.register-container {
+  padding: clamp(8px, 2vw, 16px);
+  height: 100svh;
+  box-sizing: border-box;
+}
+.register-card {
+  padding: clamp(12px, 2.4vw, 18px);
+}
+
+// Inputs never overflow card width
+.form-control {
+  box-sizing: border-box;
+  display: block;
+  max-width: 100%;
+}

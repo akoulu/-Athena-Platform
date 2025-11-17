@@ -1,0 +1,69 @@
+<div class="user-detail-container">
+  <div class="user-detail-content">
+    <div class="user-detail-header">
+      <button type="button" class="btn btn-secondary" (click)="onBack()">← Back to Users</button>
+      <h1>User Details</h1>
+    </div>
+
+    @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+    } @if (loading) {
+    <div class="loading">Loading user details...</div>
+    } @if (user && !loading) {
+    <lib-card title="User Information" subtitle="View user details">
+      <div class="user-detail-info">
+        <div class="info-row">
+          <span class="info-label">ID:</span>
+          <span class="info-value">{{ user.id }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Email:</span>
+          <span class="info-value">{{ user.email }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Username:</span>
+          <span class="info-value">{{ user.username }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">First Name:</span>
+          <span class="info-value">{{ user.firstName || 'N/A' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Last Name:</span>
+          <span class="info-value">{{ user.lastName || 'N/A' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Roles:</span>
+          <span class="info-value">
+            @for (role of user.roles; track role) {
+            <span class="badge badge-primary">{{ role }}</span>
+            }
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Status:</span>
+          <span class="info-value">
+            <span [class]="'badge ' + (user.isActive ? 'badge-success' : 'badge-danger')">
+              {{ user.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Created At:</span>
+          <span class="info-value">{{ user.createdAt | date : 'medium' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Updated At:</span>
+          <span class="info-value">{{ user.updatedAt | date : 'medium' }}</span>
+        </div>
+      </div>
+
+      <div class="user-detail-actions">
+        <button type="button" class="btn btn-primary" (click)="onEdit()">Edit User</button>
+      </div>
+    </lib-card>
+    }
+  </div>
+</div>
