@@ -88,6 +88,20 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: org_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,15 +114,17 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Prepare Database Directory
-        working-directory: org
-        run: mkdir -p data
       - name: Run Database Migrations
         working-directory: org
         run: npm run db:migrate:up
         env:
-          DB_DIALECT: sqlite
-          DB_STORAGE: ./data/test.sqlite
+          DB_DIALECT: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: org_test
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_SSL: 'false'
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
@@ -120,8 +136,13 @@ jobs:
         env:
           CI: 'true'
           NX_SKIP_CLOUD: 'true'
-          DB_DIALECT: sqlite
-          DB_STORAGE: ./data/test.sqlite
+          DB_DIALECT: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: org_test
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_SSL: 'false'
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
@@ -146,6 +167,20 @@ jobs:
   e2e-ui-chromium:
     runs-on: ubuntu-latest
     needs: [ci, e2e]
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: org_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -158,10 +193,40 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Run Database Migrations
+        working-directory: org
+        run: npm run db:migrate:up
+        env:
+          DB_DIALECT: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: org_test
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_SSL: 'false'
+          JWT_SECRET: test-secret-key-for-ci
+          JWT_EXPIRES_IN: 15m
+          REFRESH_TOKEN_EXPIRES_IN: 7d
+          NODE_ENV: test
+          PORT: 3000
+          FRONTEND_URL: http://localhost:4200
       - name: Run Playwright UI E2E (Chromium only)
         env:
           CI: 'true'
           NX_SKIP_CLOUD: 'true'
+          DB_DIALECT: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: org_test
+          DB_USER: postgres
+          DB_PASS: postgres
+          DB_SSL: 'false'
+          JWT_SECRET: test-secret-key-for-ci
+          JWT_EXPIRES_IN: 15m
+          REFRESH_TOKEN_EXPIRES_IN: 7d
+          NODE_ENV: test
+          PORT: 3000
+          FRONTEND_URL: http://localhost:4200
         run: npx nx e2e e2e --skip-nx-cache -- --project=chromium
       - name: Upload UI E2E Report
         if: always()
