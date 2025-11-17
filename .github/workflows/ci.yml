@@ -33,33 +33,25 @@ jobs:
       - name: Affected - Lint
         run: |
           if git rev-parse --verify origin/main >/dev/null 2>&1; then
-            npx nx affected -t lint --parallel=3 --base=origin/main --head=HEAD
+            npx nx affected -t lint --parallel=3 --base=origin/main --head=HEAD || npx nx run-many -t lint --parallel=3
           else
             npx nx run-many -t lint --parallel=3
           fi
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
       - name: Affected - Test (with coverage)
         run: |
           if git rev-parse --verify origin/main >/dev/null 2>&1; then
-            npx nx affected -t test --parallel=3 --coverage --base=origin/main --head=HEAD
+            npx nx affected -t test --parallel=3 --coverage --base=origin/main --head=HEAD || npx nx run-many -t test --parallel=3 --coverage
           else
             npx nx run-many -t test --parallel=3 --coverage
           fi
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
       - name: Integration Tests
         run: npm run test:integration
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
       - name: Integration Tests Coverage
         run: npm run test:integration:coverage
         continue-on-error: true
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
         # Note: Coverage thresholds are disabled for integration tests
         # as many projects don't have integration tests yet
 
@@ -75,12 +67,10 @@ jobs:
       - name: Affected - Build
         run: |
           if git rev-parse --verify origin/main >/dev/null 2>&1; then
-            npx nx affected -t build --parallel=3 --base=origin/main --head=HEAD
+            npx nx affected -t build --parallel=3 --base=origin/main --head=HEAD || npx nx run-many -t build --parallel=3
           else
             npx nx run-many -t build --parallel=3
           fi
-        env:
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
   e2e:
     runs-on: ubuntu-latest
@@ -115,7 +105,6 @@ jobs:
         working-directory: org
         env:
           CI: 'true'
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
           DB_DIALECT: sqlite
           DB_STORAGE: ./data/test.sqlite
           JWT_SECRET: test-secret-key-for-ci
@@ -159,7 +148,6 @@ jobs:
       - name: Run Playwright UI E2E (Chromium only)
         env:
           CI: 'true'
-          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
         run: npx nx e2e e2e --skip-nx-cache -- --project=chromium
       - name: Upload UI E2E Report
         if: always()
