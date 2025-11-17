@@ -22,10 +22,14 @@ module.exports = {
       return;
     }
 
-    const isSupabase = process.env.DB_HOST?.includes('supabase');
+    // Check if we're using Supabase (by checking if host contains 'supabase' or '.supabase.co')
+    // For local PostgreSQL in CI/development, RLS policies that require Supabase auth extension
+    // will not work, so we skip them silently. This is expected behavior.
+    const isSupabase = process.env.DB_HOST?.includes('supabase') || process.env.DB_HOST?.includes('.supabase.co');
 
     if (!isSupabase) {
-      console.log('⚠ Not using Supabase, skipping RLS policies (RLS requires Supabase auth extension)');
+      // Silently skip RLS policies for non-Supabase databases (e.g., local PostgreSQL in CI)
+      // This is expected behavior and not an error
       return;
     }
 
@@ -88,22 +92,28 @@ module.exports = {
           !error.message.includes('already exists') &&
           !error.message.includes('does not exist')
         ) {
-          console.warn(
-            '⚠ Could not create users read policy (might need Supabase auth):',
-            error.message
-          );
-          console.warn('   This is OK if you are not using Supabase auth extension');
+          // Only warn if we're actually using Supabase
+          if (process.env.DB_HOST?.includes('supabase') || process.env.DB_HOST?.includes('.supabase.co')) {
+            console.warn(
+              '⚠ Could not create users read policy (might need Supabase auth):',
+              error.message
+            );
+            console.warn('   This is OK if you are not using Supabase auth extension');
+          }
         }
       }
 
       // Note: Service role (used by NestJS) bypasses RLS automatically
       // These policies only apply to anon/authenticated roles
     } catch (error) {
-      console.error('⚠ Error creating RLS policies:', error.message);
-      // Don't throw - RLS might not be available in all environments
-      if (error.message.includes('row-level security')) {
-        console.warn('⚠ RLS might not be enabled. Run migration 005 first.');
+      // Only log errors if we're actually using Supabase
+      if (process.env.DB_HOST?.includes('supabase') || process.env.DB_HOST?.includes('.supabase.co')) {
+        console.error('⚠ Error creating RLS policies:', error.message);
+        if (error.message.includes('row-level security')) {
+          console.warn('⚠ RLS might not be enabled. Run migration 005 first.');
+        }
       }
+      // Don't throw - RLS might not be available in all environments (e.g., local PostgreSQL)
     }
   },
 

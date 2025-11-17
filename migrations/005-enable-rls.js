@@ -10,6 +10,10 @@ module.exports = {
       return;
     }
 
+    // Note: RLS policies that use Supabase auth extension (auth.uid()) will fail
+    // on local PostgreSQL. This is expected and handled gracefully.
+    // For local development/CI, RLS is enabled but policies are optional.
+
     // Enable RLS on all tables
     const tables = [
       'users',
@@ -28,7 +32,7 @@ module.exports = {
         if (error.message.includes('does not exist')) {
           console.warn(`⚠ Table ${table} does not exist, skipping RLS`);
         } else if (error.message.includes('already enabled')) {
-          console.log(`✓ RLS already enabled on ${table}`);
+          // Silently continue if RLS is already enabled
         } else {
           console.error(`✗ Failed to enable RLS on ${table}:`, error.message);
           throw error;
@@ -47,15 +51,19 @@ module.exports = {
         USING (auth.uid()::uuid = id::uuid);
       `);
       console.log('✓ Created policy: Users can read own data');
-    } catch (error) {
-      if (!error.message.includes('already exists')) {
-        console.warn(
-          '⚠ Could not create users read policy (might need Supabase auth):',
-          error.message
-        );
-        console.warn('   This is OK if you are not using Supabase auth extension');
+      } catch (error) {
+        if (!error.message.includes('already exists')) {
+          // Silently skip policy creation for non-Supabase databases
+          // This is expected behavior in CI/local environments
+          if (process.env.DB_HOST?.includes('supabase') || process.env.DB_HOST?.includes('.supabase.co')) {
+            console.warn(
+              '⚠ Could not create users read policy (might need Supabase auth):',
+              error.message
+            );
+            console.warn('   This is OK if you are not using Supabase auth extension');
+          }
+        }
       }
-    }
 
     // Policy: Service role can do everything (for NestJS app)
     // Note: This is handled by service_role key in Supabase, which bypasses RLS
