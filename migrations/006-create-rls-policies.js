@@ -15,11 +15,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up({ context: qi }) {
-    const isSupabase =
-      process.env.DB_DIALECT === 'postgres' && process.env.DB_HOST?.includes('supabase');
+    // RLS is only supported in PostgreSQL, skip for SQLite and other databases
+    const dialect = qi.sequelize.getDialect();
+    if (dialect !== 'postgres') {
+      console.log(`⚠ RLS is not supported in ${dialect}, skipping RLS policies`);
+      return;
+    }
+
+    const isSupabase = process.env.DB_HOST?.includes('supabase');
 
     if (!isSupabase) {
-      console.log('⚠ Not using Supabase, skipping RLS policies');
+      console.log('⚠ Not using Supabase, skipping RLS policies (RLS requires Supabase auth extension)');
       return;
     }
 
@@ -102,6 +108,13 @@ module.exports = {
   },
 
   async down({ context: qi }) {
+    // RLS is only supported in PostgreSQL, skip for SQLite and other databases
+    const dialect = qi.sequelize.getDialect();
+    if (dialect !== 'postgres') {
+      console.log(`⚠ RLS is not supported in ${dialect}, skipping RLS policies rollback`);
+      return;
+    }
+
     const tables = [
       'refresh_tokens',
       'blacklisted_tokens',

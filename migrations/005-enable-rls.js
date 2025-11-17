@@ -3,6 +3,13 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up({ context: qi }) {
+    // RLS is only supported in PostgreSQL, skip for SQLite and other databases
+    const dialect = qi.sequelize.getDialect();
+    if (dialect !== 'postgres') {
+      console.log(`⚠ RLS is not supported in ${dialect}, skipping RLS migration`);
+      return;
+    }
+
     // Enable RLS on all tables
     const tables = [
       'users',
@@ -64,6 +71,13 @@ module.exports = {
   },
 
   async down({ context: qi }) {
+    // RLS is only supported in PostgreSQL, skip for SQLite and other databases
+    const dialect = qi.sequelize.getDialect();
+    if (dialect !== 'postgres') {
+      console.log(`⚠ RLS is not supported in ${dialect}, skipping RLS migration rollback`);
+      return;
+    }
+
     const tables = [
       'users',
       'refresh_tokens',
