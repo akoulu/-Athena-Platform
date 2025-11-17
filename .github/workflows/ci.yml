@@ -118,13 +118,14 @@ jobs:
         working-directory: org
         run: npm run db:migrate:up
         env:
+          # Use Supabase if credentials are provided via secrets, otherwise use local PostgreSQL
           DB_DIALECT: postgres
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: org_test
-          DB_USER: postgres
-          DB_PASS: postgres
-          DB_SSL: 'false'
+          DB_HOST: ${{ secrets.SUPABASE_DB_HOST || 'localhost' }}
+          DB_PORT: ${{ secrets.SUPABASE_DB_PORT || 5432 }}
+          DB_NAME: ${{ secrets.SUPABASE_DB_NAME || 'org_test' }}
+          DB_USER: ${{ secrets.SUPABASE_DB_USER || 'postgres' }}
+          DB_PASS: ${{ secrets.SUPABASE_DB_PASS || 'postgres' }}
+          DB_SSL: ${{ secrets.SUPABASE_DB_SSL || 'false' }}
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
@@ -136,13 +137,14 @@ jobs:
         env:
           CI: 'true'
           NX_SKIP_CLOUD: 'true'
+          # Use Supabase if credentials are provided, otherwise use local PostgreSQL
           DB_DIALECT: postgres
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: org_test
-          DB_USER: postgres
-          DB_PASS: postgres
-          DB_SSL: 'false'
+          DB_HOST: ${{ secrets.SUPABASE_DB_HOST || 'localhost' }}
+          DB_PORT: ${{ secrets.SUPABASE_DB_PORT || '5432' }}
+          DB_NAME: ${{ secrets.SUPABASE_DB_NAME || 'org_test' }}
+          DB_USER: ${{ secrets.SUPABASE_DB_USER || 'postgres' }}
+          DB_PASS: ${{ secrets.SUPABASE_DB_PASS || 'postgres' }}
+          DB_SSL: ${{ secrets.SUPABASE_DB_SSL || 'false' }}
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
@@ -197,13 +199,14 @@ jobs:
         working-directory: org
         run: npm run db:migrate:up
         env:
+          # Use Supabase if credentials are provided via secrets, otherwise use local PostgreSQL
           DB_DIALECT: postgres
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: org_test
-          DB_USER: postgres
-          DB_PASS: postgres
-          DB_SSL: 'false'
+          DB_HOST: ${{ secrets.SUPABASE_DB_HOST || 'localhost' }}
+          DB_PORT: ${{ secrets.SUPABASE_DB_PORT || 5432 }}
+          DB_NAME: ${{ secrets.SUPABASE_DB_NAME || 'org_test' }}
+          DB_USER: ${{ secrets.SUPABASE_DB_USER || 'postgres' }}
+          DB_PASS: ${{ secrets.SUPABASE_DB_PASS || 'postgres' }}
+          DB_SSL: ${{ secrets.SUPABASE_DB_SSL || 'false' }}
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
@@ -214,13 +217,14 @@ jobs:
         env:
           CI: 'true'
           NX_SKIP_CLOUD: 'true'
+          # Use Supabase if credentials are provided, otherwise use local PostgreSQL
           DB_DIALECT: postgres
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_NAME: org_test
-          DB_USER: postgres
-          DB_PASS: postgres
-          DB_SSL: 'false'
+          DB_HOST: ${{ secrets.SUPABASE_DB_HOST || 'localhost' }}
+          DB_PORT: ${{ secrets.SUPABASE_DB_PORT || '5432' }}
+          DB_NAME: ${{ secrets.SUPABASE_DB_NAME || 'org_test' }}
+          DB_USER: ${{ secrets.SUPABASE_DB_USER || 'postgres' }}
+          DB_PASS: ${{ secrets.SUPABASE_DB_PASS || 'postgres' }}
+          DB_SSL: ${{ secrets.SUPABASE_DB_SSL || 'false' }}
           JWT_SECRET: test-secret-key-for-ci
           JWT_EXPIRES_IN: 15m
           REFRESH_TOKEN_EXPIRES_IN: 7d
